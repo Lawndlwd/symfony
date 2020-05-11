@@ -1,6 +1,4 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
-    <link rel="stylesheet" href="build/css/app.css">{% endblock %}
 {% block body %}
 
     <!doctype html>
@@ -10,7 +8,7 @@
     <title>{{ message }}</title>
     </head>
     <body>
-    <h1>{{ message }} </h1>
+    <h1 class="primary">{{ message }}</h1>
     </body>
     </html>
 {% endblock %}
