@@ -27,9 +27,9 @@ class WildController extends AbstractController
     */
     public function showByProgram(?string $slug):Response
 {
+    $message=null;
     if (!$slug) {
-        throw $this
-            ->createNotFoundException('Aucune série sélectionnée, veuillez choisir une série');
+        $message='Aucune série sélectionnée, veuillez choisir une série';
     }
     $slug = preg_replace(
         '/-/',
@@ -38,6 +38,7 @@ class WildController extends AbstractController
 
     return $this->render('wild/show.html.twig', [
         'slug'  => $slug,
+        'message'=>$message,
     ]);
 }
 }
