@@ -22,14 +22,14 @@ class WildController extends AbstractController
 * Getting a program with a formatted slug for title
 *
 * @param string $slug The slugger
-* @Route("/wild/show/{slug<^[a-z0-9-]+$>}", defaults={"slug" = null}, name="show_program")
+* @Route("/wild/show/{slug<^[a-z0-9-]+$>}", defaults={"slug" = null}, name="show")
      * @return Response
     */
-    public function showByProgram(?string $slug):Response
+    public function show(?string $slug):Response
 {
+    $message=null;
     if (!$slug) {
-        throw $this
-            ->createNotFoundException('Aucune série sélectionnée, veuillez choisir une série');
+        $message= 'Aucune série sélectionnée, veuillez choisir une série';
     }
     $slug = preg_replace(
         '/-/',
@@ -38,6 +38,7 @@ class WildController extends AbstractController
 
     return $this->render('wild/show.html.twig', [
         'slug'  => $slug,
+        'message'=>$message,
     ]);
 }
 }

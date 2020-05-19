@@ -2,7 +2,9 @@
 {% block title %}{{ slug }}{% endblock %}
 
 {% block body %}
-
+    {% if message %}
+        <h1>{{ message }}</h1>
+    {% endif %}
     <div class="media">
         <div class="media-body ml-5">
             <h1 class="mt-0">{{ slug }}</h1>
