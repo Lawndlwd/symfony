@@ -2,6 +2,7 @@
 // src/Controller/WildController.php
 namespace App\Controller;
 
+use App\Entity\Season;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,26 +20,51 @@ class WildController extends AbstractController
         ]);
     }
     /**
-* Getting a program with a formatted slug for title
-*
-* @param string $slug The slugger
-* @Route("/wild/show/{slug<^[a-z0-9-]+$>}", defaults={"slug" = null}, name="show")
-     * @return Response
+    * Getting a program with a formatted slug for title
+    *
+    * @param string $slug The slugger
+    * @Route("/wild/show/{slug<^[a-z0-9-]+$>}", defaults={"slug" = null}, name="show")
+    * @return Response
     */
     public function show(?string $slug):Response
-{
+    {
     $message=null;
     if (!$slug) {
-        $message= 'Aucune série sélectionnée, veuillez choisir une série';
+    $message= 'Aucune série sélectionnée, veuillez choisir une série';
     }
     $slug = preg_replace(
-        '/-/',
-        ' ', ucwords(trim(strip_tags($slug)), "-")
+    '/-/',
+    ' ', ucwords(trim(strip_tags($slug)), "-")
     );
 
     return $this->render('wild/show.html.twig', [
-        'slug'  => $slug,
-        'message'=>$message,
+    'slug'  => $slug,
+    'message'=>$message,
     ]);
-}
+    }
+
+    /**
+     * Getting a program with a formatted slug for title
+     *
+     * @param string $slug The slugger
+     * @Route("/wild/show/{slug<^[a-z0-9-]+$>}", defaults={"slug" = null}, name="show")
+     * @return Response
+     */
+    public function showByProgram(?string $slug):Response
+    {
+        $message=null;
+        if (!$slug) {
+            $message= 'Aucune série sélectionnée, veuillez choisir une série';
+        }
+        $slug = preg_replace(
+            '/-/',
+            ' ', ucwords(trim(strip_tags($slug)), "-")
+        );
+        $season = $this->getDoctrine()->getRepository(Season::class)->findAll();
+
+        return $this->render('wild/show.html.twig', [
+            'slug'  => $slug,
+            'message'=>$message,
+        ]);
+    }
 }
