@@ -3,15 +3,25 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <h1>Toutes les séries de la table program : </h1>
-    {% for program in programs %}
-        <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-            <p>{{ program.summary }}</p>
+    <div class="container">
+        <div class="row mt-4">
+            {% for program in programs %}
+
+            <div class="col-lg-6">
+                <img src="{{ program.poster }}" class="img-fluid" alt="Responsive image">
+            </div>
+            <div class="col-lg-6">
+                <div class="jumbotron">
+                    <h2>{{ loop.index }} / {{ program.title }} - Catégorie :</h2>
+                    <p>{{ program.summary }}</p>
+                    <a href="{{ path('wild_show_program', {programName: program.title|lower|replace({' ': '-'})}) }}" class="btn btn-primary stretched-link">go</a>
+                </div>
+            </div>
+            {% else %}
+                Aucune série trouvée.
+            {% endfor %}
         </div>
-    {% else %}
-        Aucune série trouvée.
-    {% endfor %}
+    </div>
     <a href="{{ path('app_index') }}">
         Retour à l'accueil
     </a>

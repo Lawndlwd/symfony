@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProgramRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,15 +30,15 @@ class Program
     private $summary;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $poster;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=Season::class, mappedBy="program_id")
      */
-    private $category;
+    private $season_id;
+
 
     public function getId(): ?int
     {
@@ -78,15 +80,33 @@ class Program
 
         return $this;
     }
-
-    public function getCategory(): ?Category
+    /**
+     * @return Collection|Season[]
+     */
+    public function getSeasonId(): Collection
     {
-        return $this->category;
+        return $this->season_id;
     }
 
-    public function setCategory(?Category $category): self
+    public function addSeasonId(Season $seasonId): self
     {
-        $this->category = $category;
+        if (!$this->season_id->contains($seasonId)) {
+            $this->season_id[] = $seasonId;
+            $seasonId->setProgramId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeasonId(Season $seasonId): self
+    {
+        if ($this->season_id->contains($seasonId)) {
+            $this->season_id->removeElement($seasonId);
+            // set the owning side to null (unless already changed)
+            if ($seasonId->getProgramId() === $this) {
+                $seasonId->setProgramId(null);
+            }
+        }
 
         return $this;
     }
