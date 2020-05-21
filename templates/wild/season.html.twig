@@ -1,20 +1,30 @@
+
 {% extends 'base.html.twig' %}
+{% block title %}{% endblock %}
+
 {% block body %}
-    <div class="container">
-        <h2>{{ program.title }} ({{ episodes.owner.year }})</h2>
-        <p>{{ program.summary }}</p>
-        <p><img src="{{ program.poster }}" alt=""></p>
-        {% for episode in episodes %}
-            <div class="card">
-                <div class="card-body">
-                    <h4>{{ episode.title }}</h4>
-                    <p>{{ episode.synopsis }}</p>
-                    <p><a href="{{ path('wild_show_episode', {'slug' : episode.slug}) }}" class="btn btn-primary"> Voir
-                            l'épisode</a></p>
-                </div>
-            </div>
-        {% endfor %}
-        <p><a href="{{ path('wild_show_program', {programName: program.title|lower|replace({' ': '-'})}) }}">Retour au
-                saisons</a></p>
+    <div class="card mx-auto mt-5 w-25 h-75">
+        <div class="card-body">
+            <h5 class="card-title"> {{ program.title }}</h5>
+            <p class="card-text"> {{ program.summary }}</p>
+        </div>
+        {% if episodes is  empty %}
+            <small>no  eposides</small>
+
+
+        {% else %}
+            <ul class="list-group list-group-flush">
+                {% for episode in episodes %}
+                    <li class="list-group-item"><a href="{{ path('wild_show_episode', {"id":episode.id}) }}">Episode {{ episode.number }} : {{ episode.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </div>
+
+
+
+
+    <button type="button" class="btn btn-lg round m-5">
+        <a href="{{ path('wild_index') }}"> Retour à l'accueil </a>
+    </button>
 {% endblock %}
