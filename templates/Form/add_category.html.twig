@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Category{% endblock %}
+
+{% block body %}
+<div class="container">
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    <button  type="submit" name="btnSearch" class="btn btn-primary stretched-link">Rechercher</button>
+{{ form_end(form) }}
+{% endblock %}

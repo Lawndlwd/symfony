@@ -4,6 +4,10 @@
 
 {% block body %}
     <div class="container">
+        {{ form_start(form) }}
+        {{ form_row(form.Search) }}
+        <button  type="submit" name="btnSearch" class="btn btn-primary stretched-link">Rechercher</button>
+        {{ form_end(form) }}
         <div class="row mt-4">
             {% for program in programs %}
 
